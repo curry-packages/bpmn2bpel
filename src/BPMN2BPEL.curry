@@ -5,11 +5,12 @@
 module BPMN2BPEL where
 
 import Grappa
+import Prelude hiding ((<$>), (<$))
 
 
 --- The type of BPMN edges.
 data BPMNComp =
-     BPMNStart | BPMNEnd | BPMNPGW | 
+     BPMNStart | BPMNEnd | BPMNPGW |
      BPMNXGW String String |        --XOR conditions as params
      BPMNActivity String |          --label as param
      BPMNInter BPMNInterKind String --kind and label as params
@@ -41,8 +42,8 @@ type BPEL = [BPELComp]
 --- and returns a semantic value of type `BPEL` (the BPEL corresponding
 --- to the input BPMN).
 processS :: Grappa BPMNComp BPEL
-processS = edge (BPMNStart,[n1]) *> 
-           flowS (n1,n2) <* 
+processS = edge (BPMNStart,[n1]) *>
+           flowS (n1,n2) <*
            edge (BPMNEnd,[n2])
  where n1,n2 free
 
@@ -52,12 +53,12 @@ flowS (n1,n2) = (:)   <$> flElemS (n1,n) <*> flowS (n,n2)
                 where n free
 
 flElemS :: (Node,Node) -> Grappa BPMNComp BPELComp
-flElemS (n1,n2) = translateInter itype name <$ 
+flElemS (n1,n2) = translateInter itype name <$
                   edge (BPMNInter itype name, [n1,n2])
                   where itype,name free
                         translateInter BPMNWait    = Wait
                         translateInter BPMNReceive = Receive
-flElemS (n1,n2) = Invoke lab <$ 
+flElemS (n1,n2) = Invoke lab <$
                   edge (BPMNActivity lab, [n1,n2])
                   where lab free
 flElemS (n1,n2) = edge (BPMNPGW, [n1,n1t,n1r,n1b]) *>
@@ -70,7 +71,7 @@ flElemS (n1,n2) = edge (BPMNXGW c1 c2, [n1,n1t,n1r,n1b]) *>
                   (Switch c1 c2 <$>
                    flowS (n1t,n2t) <*>
                    flowS (n1b,n2b)) <*
-                   edge (BPMNXGW d1 d2, [n2l,n2t,n2,n2b]) 
+                   edge (BPMNXGW d1 d2, [n2l,n2t,n2,n2b])
                   where c1,c2,d1,d2,n1t,n1r,n1b,n2l,n2t,n2b free
 
 
@@ -95,7 +96,7 @@ bpelComp2xml (Flow f1 f2) = "<flow>\n" ++
                                 indent 1 (seq2xml f1) ++
                                 indent 1 (seq2xml f2) ++
                             "</flow>\n"
-bpelComp2xml (Switch c1 c2 f1 f2) = 
+bpelComp2xml (Switch c1 c2 f1 f2) =
                             "<switch>\n" ++
                             " <case cond=\""++c1++"\">\n" ++
                                 indent 1 (seq2xml f1) ++
@@ -126,7 +127,7 @@ Reverse the transformation:
 BPMN2BPEL> processS [e1,e2,e3,e4] =:= ([Invoke "act1",Wait "ev1"],[])  where e1,e2,e3,e4 free
 {e1=(BPMNStart,[_a]), e2=(BPMNActivity "act1",[_a,_b]), e3=(BPMNInter BPMNWait "ev1",[_b,_c]), e4=(BPMNEnd,[_c])} True
 
-BPMN2BPEL> processS [e1,e2,e3,e4,e5,e6] =:= ([Switch "c1" "c2" [Invoke "act1"] [Invoke "act2"]],[]) where e1,e2,e3,e4,e5,e6 free 
+BPMN2BPEL> processS [e1,e2,e3,e4,e5,e6] =:= ([Switch "c1" "c2" [Invoke "act1"] [Invoke "act2"]],[]) where e1,e2,e3,e4,e5,e6 free
 {e1=(BPMNStart,[_a]), e2=(BPMNXGW "c1" "c2",[_a,_b,_c,_d]), e3=(BPMNActivity "act1",[_b,_e]), e4=(BPMNActivity "act2",[_d,_f]), e5=(BPMNXGW _g _h,[_i,_e,_j,_f]), e6=(BPMNEnd,[_j])} True
 
 -}

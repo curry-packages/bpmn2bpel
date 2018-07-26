@@ -6,6 +6,8 @@
 
 module Grappa where
 
+import Prelude hiding ((<$>), (<$))
+
 --- All nodes are numbered.
 type Node = Int
 
@@ -35,7 +37,7 @@ pSucceed v g = (v, g)
 
 --- `eoi` succeeds only if the graph is already completely consumed.
 --- In this case, the result `()` is returned
-eoi :: Grappa t () 
+eoi :: Grappa t ()
 eoi [] = ((), [])
 
 --- The parser `edge e` succeeds only if the given edge `e` is part of the
@@ -50,7 +52,7 @@ edge e g | g=:=(g1++e:g2) = ((), g1++g2)
 (_  <|> p2) g = p2 g
 
 --- The successive application of two parsers where the result
---- is constructed by function application. 
+--- is constructed by function application.
 (<*>) :: Grappa t (r1->r2) -> Grappa t r1 -> Grappa t r2
 (p <*> q) g = case p g of
                (pv, g1) -> case q g1 of
