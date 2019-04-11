@@ -2,9 +2,10 @@
 
 module Main where
 
+import Control.AllSolutions
+
 import Grappa
 import BPMN2BPEL
-import AllSolutions
 
 --- Applies the parser `BPMNBPEL.processS` to the example hypergraph
 --- `BPMNBPEL.ex` and pretty-prints the resulting BPEL representation in XML:

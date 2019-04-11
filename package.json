@@ -1,14 +1,17 @@
 {
     "name": "bpmn2bpel",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "author": "Michael Hanus <mh@informatik.uni-kiel.de>",
     "synopsis": "Libraries to support a bi-directional transformation between BPMN and BPEL",
     "category": [ "Data" ],
-    "dependencies": { },
+    "dependencies": {
+        "base"      : ">= 1.0.0, < 2.0.0",
+        "searchtree": ">= 1.0.0"
+    },
     "exportedModules": [ "BPMN2BPEL", "BPMNParser", "Grappa" ],
     "compilerCompatibility": {
-        "pakcs": ">= 1.14.0, < 2.0.0",
-        "kics2": ">= 0.5.0, < 2.0.0"
+        "pakcs": ">= 2.0.0, < 3.0.0",
+        "kics2": ">= 2.0.0, < 3.0.0"
     },
     "license": "BSD-3-Clause",
     "licenseFile": "LICENSE",
