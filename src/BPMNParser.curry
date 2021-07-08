@@ -8,6 +8,8 @@
 
 module BPMNParser where
 
+import Prelude hiding ( (*>) )
+
 import Grappa
 
 
