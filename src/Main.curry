@@ -2,7 +2,7 @@
 
 module Main where
 
-import Control.AllSolutions
+import Control.AllValues
 
 import Grappa
 import BPMN2BPEL

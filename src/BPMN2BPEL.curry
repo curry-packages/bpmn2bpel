@@ -4,6 +4,8 @@
 
 module BPMN2BPEL where
 
+import Prelude hiding ( (<$>), (<*>), (<$), (<*), (*>) )
+
 import Grappa
 
 

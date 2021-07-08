@@ -40,8 +40,8 @@ eoi [] = ((), [])
 
 --- The parser `edge e` succeeds only if the given edge `e` is part of the
 --- given input graph `g`.
-edge :: Edge t -> Grappa t ()
-edge e g | g=:=(g1++e:g2) = ((), g1++g2)
+edge :: Data t => Edge t -> Grappa t ()
+edge e g | g =:= (g1 ++ e:g2) = ((), g1 ++ g2)
  where g1, g2 free
 
 --- The choice between two parsers.
