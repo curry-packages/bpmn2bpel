@@ -2,7 +2,7 @@
 
 module Main where
 
-import Control.AllValues ( getOneValue )
+import Control.Search.AllValues ( getOneValue )
 
 import Grappa
 import BPMN2BPEL
