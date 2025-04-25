@@ -12,7 +12,7 @@ exploits the framework of functional logic GRAPh PArser combinators
 The ideas behind this implementation are described in this paper:
 
 S. Mazanek, M. Hanus:
-[Constructing a Bidirectional Transformation between BPMN and BPEL with a Functional Logic Programming Language](http://doi.acm.org/10.1145/1140335.1140341)
+[Constructing a Bidirectional Transformation between BPMN and BPEL with a Functional Logic Programming Language](http://dx.doi.org/10.1016/j.jvlc.2010.11.005)
 Journal of Visual Languages and Computing, 22(1), pp. 66-89, 2011
 
 --------------------------------------------------------------------------
